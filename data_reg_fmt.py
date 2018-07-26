@@ -5,6 +5,7 @@ from __future__ import print_function
 import pickle
 import numpy as np
 import pre_process_data
+import pre_process_data_js
 
 from scipy.interpolate import griddata
 
@@ -33,7 +34,7 @@ def gen_speed_var_trajs(dataset, factor):
 
 def main():
     #todo: read new dataset
-    pre_process_data.main()
+    pre_process_data_js.main()
 
     # load previous generate data
     pkl_file = open('./pkl/datasets_reg.pkl', 'rb')
@@ -60,10 +61,12 @@ def main():
 
 
     # add various speed of the trajectory
+    new_reg_fmt_datasets = list(reg_fmt_datasets)
 
     print('generating different speed of trajectories')
-    speed_list = [0.75,1.25]
-    new_reg_fmt_datasets = list(reg_fmt_datasets)
+    # speed_list = [0.5, 0.75, 1.25, 1.5]
+    speed_list = [0.4, 0.6, 0.8, 1.2, 1.4, 1.6]
+
     for i,dataset in enumerate(reg_fmt_datasets):
         for speed in speed_list:
             new_trajs = gen_speed_var_trajs(dataset,speed)
@@ -73,7 +76,7 @@ def main():
     print('length of reg_fmt_datasets:', len(new_reg_fmt_datasets))
 
 
-    pickle.dump(new_reg_fmt_datasets, open("reg_fmt_datasets.pkl", "wb"))
+    pickle.dump(new_reg_fmt_datasets, open("reg_fmt_datasets_6spd.pkl", "wb"))
 
 
 if __name__ == '__main__':
